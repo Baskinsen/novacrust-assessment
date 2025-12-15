@@ -18,7 +18,7 @@ interface RecipientFormData {
 
 export const RecipientDetailsForm = ({ onBack }: { onBack?: () => void }) => {
     const [step, setStep] = useState(1);
-    const { control, handleSubmit, setValue, formState: { errors } } = useForm<RecipientFormData>({
+    const { control, handleSubmit, setValue, watch, formState: { errors, isValid } } = useForm<RecipientFormData>({
         mode: "onChange",
         defaultValues: {
             bank: "",
@@ -33,6 +33,11 @@ export const RecipientDetailsForm = ({ onBack }: { onBack?: () => void }) => {
     const onSubmit = (data: RecipientFormData) => {
         console.log("Recipient Details Submitted:", data);
     };
+
+    const bank = watch("bank");
+    const accountNumber = watch("accountNumber");
+    const accountName = watch("accountName");
+    const isStep1Valid = bank && accountNumber && accountNumber.length === 10 && accountName;
 
     const handleNext = () => {
         setStep(2);
@@ -105,11 +110,16 @@ export const RecipientDetailsForm = ({ onBack }: { onBack?: () => void }) => {
                                         <Input
                                             {...field}
                                             id="accountNumber"
+                                            type="text"
+                                            inputMode="numeric"
+                                            maxLength={10}
                                             className="h-10 sm:h-12 rounded-full border-border bg-card px-4 sm:px-[24px] py-3 sm:py-[16px] font-outfit text-primary focus-visible:ring-primary"
                                             placeholder="0123456789"
                                             onChange={(e) => {
+                                                const numericValue = e.target.value.replace(/[^0-9]/g, '');
+                                                e.target.value = numericValue;
                                                 field.onChange(e);
-                                                if (e.target.value.length === 10) {
+                                                if (numericValue.length === 10) {
                                                     setTimeout(() => {
                                                         setValue("accountName", "John Doe Verified");
                                                     }, 500);
@@ -143,7 +153,8 @@ export const RecipientDetailsForm = ({ onBack }: { onBack?: () => void }) => {
                             <Button
                                 type="button"
                                 onClick={handleNext}
-                                className="w-full h-12 sm:h-[52px] rounded-full bg-primary text-primary-foreground font-outfit mt-4 hover:bg-primary/90 transition-colors cursor-pointer"
+                                disabled={!isStep1Valid}
+                                className="w-full h-12 sm:h-[52px] rounded-full bg-primary text-primary-foreground font-outfit mt-4 hover:bg-primary/90 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 Next
                             </Button>
@@ -222,7 +233,8 @@ export const RecipientDetailsForm = ({ onBack }: { onBack?: () => void }) => {
 
                                 <Button
                                     type="submit"
-                                    className="w-full h-12 sm:h-[52px] rounded-full bg-primary text-primary-foreground font-outfit mt-4 hover:bg-primary/90 transition-colors cursor-pointer"
+                                    disabled={!isValid}
+                                    className="w-full h-12 sm:h-[52px] rounded-full bg-primary text-primary-foreground font-outfit mt-4 hover:bg-primary/90 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     Confirm
                                 </Button>

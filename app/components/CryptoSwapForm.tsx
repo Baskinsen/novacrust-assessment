@@ -15,11 +15,12 @@ interface SwapFormData {
 
 export const CryptoSwapForm = () => {
     const navigate = useNavigate();
-    const { control, handleSubmit, formState: { errors } } = useForm<SwapFormData>({
+    const { control, handleSubmit, formState: { errors, isValid } } = useForm<SwapFormData>({
+        mode: "onChange",
         defaultValues: {
-            payAmount: "0.00",
+            payAmount: "",
             payCurrency: "celo",
-            receiveAmount: "0.00",
+            receiveAmount: "",
             receiveCurrency: "celo",
             payFrom: "metamask",
             payTo: "metamask",
@@ -121,7 +122,13 @@ export const CryptoSwapForm = () => {
                 />
                 {errors.payTo && <span className="text-red-500 text-sm font-outfit">{errors.payTo.message}</span>}
             </div>
-            <button type="submit" className="w-full h-12 sm:h-[52px] rounded-full bg-primary text-primary-foreground cursor-pointer font-outfit">Convert now</button>
+            <button
+                type="submit"
+                disabled={!isValid}
+                className="w-full h-12 sm:h-[52px] rounded-full bg-primary text-primary-foreground cursor-pointer font-outfit disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+                Convert now
+            </button>
         </form>
     );
 };

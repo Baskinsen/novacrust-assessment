@@ -33,8 +33,19 @@ export const CryptoInput = ({ title, control, amountName, currencyName, error, a
                         <Input
                             {...field}
                             id={amountName}
+                            type="text"
+                            inputMode="decimal"
                             className="border-none shadow-none focus-visible:ring-0 text-[28px] sm:text-3xl font-semibold p-0 h-auto font-outfit text-[#000E10]"
                             placeholder="0.00"
+                            onChange={(e) => {
+                                const numericValue = e.target.value.replace(/[^0-9.]/g, '');
+                                const parts = numericValue.split('.');
+                                const filteredValue = parts.length > 2
+                                    ? parts[0] + '.' + parts.slice(1).join('')
+                                    : numericValue;
+                                e.target.value = filteredValue;
+                                field.onChange(e);
+                            }}
                         />
                     )}
                 />
