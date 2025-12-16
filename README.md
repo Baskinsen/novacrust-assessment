@@ -169,23 +169,6 @@ Outputs to `build/` directory:
 npm start
 ```
 
-## 🐳 Docker Deployment
-
-Build and run with Docker:
-
-```bash
-docker build -t novacrust-assessment .
-docker run -p 3000:3000 novacrust-assessment
-```
-
-Deploy to any platform supporting Docker:
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean
-- Fly.io
-- Railway
-
 ## 📱 Responsive Breakpoints Tested
 
 - ✅ **Mobile**: 375×667 (iPhone SE)
@@ -228,13 +211,6 @@ All pages verified for:
    - Error messaging
    - Loading states
 
-### 🔮 Future Enhancements
-- Cash-to-Crypto conversion flow
-- Cash-to-Fiat loan application
-- Backend API integration
-- Real account verification
-- Transaction history
-- User authentication
 
 ## 📄 License
 
