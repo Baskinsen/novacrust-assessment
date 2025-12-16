@@ -20,7 +20,6 @@ This application demonstrates a production-ready crypto swap interface with:
 - ✅ Two-step recipient details form:
   - **Step 1**: Bank selection, account number with auto-verification, account name
   - **Step 2**: Recipient email and phone number with country code selector
-- ✅ Coming soon placeholders for Cash-to-Crypto and Cash-to-Fiat features
 
 ### Design & UX
 - 🎨 **Responsive Design**: Mobile-first approach with breakpoints at 640px (sm), 768px (md), and 1024px (lg)
